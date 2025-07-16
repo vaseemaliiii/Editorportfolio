@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <h1>Admin Panel</h1>
+</header>
+<div style="text-align:center;margin-top:20px;">
+  <h2>Admin Login</h2>
+  <input type="email" id="adminEmail" placeholder="Admin Email"><br><br>
+  <input type="password" id="adminPass" placeholder="Password"><br><br>
+  <button class="btn primary" onclick="adminLogin()">Login</button>
+</div>
+<div id="adminSection" style="display:none;padding:20px;">
+  <h3>All Users</h3>
+  <div id="userList"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
