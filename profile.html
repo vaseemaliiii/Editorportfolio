@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Portfolio | Editor Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Portfolio</h1>
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<section class="section dashboard-wrap">
+  <h2 id="profileName">Loading...</h2>
+  <div id="profileInfo" class="dashboard-card"></div>
+  <div id="previewArea"></div>
+</section>
+
+<footer>Powered by Editor Portfolio</footer>
+
+<!-- Firebase libs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<!-- App globals -->
+<script src="app.js"></script>
+<!-- Page logic -->
+<script src="profile.js"></script>
+</body>
+</html>
