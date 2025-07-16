@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard - Editor Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./style.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+<header class="header">
+  <h1>Dashboard</h1>
+  <nav>
+    <a href="./admin.html" class="btn">Admin</a>
+    <a href="#" class="btn" onclick="logoutUser()">Logout</a>
+  </nav>
+</header>
+
+<div class="dashboard">
+  <h2 id="dashWelcome"></h2>
+  <p id="dashPlan"></p>
+
+  <div id="adsBox" class="form-container" style="display:none;">
+    <h2>Ads</h2>
+    <p>Upgrade to Premium to remove ads.</p>
+  </div>
+
+  <h3>Upload Your Work</h3>
+  <p id="limitText"></p>
+
+  <div style="margin-top:16px;">
+    <label>Thumbnails:</label>
+    <input type="file" id="thumbInput" accept="image/*" multiple>
+  </div>
+  <div style="margin-top:16px;">
+    <label>Logos:</label>
+    <input type="file" id="logoInput" accept="image/*" multiple>
+  </div>
+  <div style="margin-top:16px;">
+    <label>Short Videos:</label>
+    <input type="file" id="videoInput" accept="video/*" multiple>
+  </div>
+
+  <button class="btn primary" style="margin-top:20px;" onclick="saveUploads()">Save Portfolio</button>
+
+  <div id="previewArea"></div>
+
+  <div style="margin-top:32px;">
+    <button id="upgradeBtn" class="btn primary" onclick="startUpgrade()">Upgrade to Premium (₹399)</button>
+  </div>
+</div>
+
+<footer>
+  <p>Need help? Contact: vaseemali0909@gmail.com</p>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
