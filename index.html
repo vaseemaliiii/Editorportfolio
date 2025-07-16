@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Editor Portfolio Lite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{margin:0;padding:0;font-family:Arial, sans-serif;background:#121212;color:#fff;text-align:center;}
+header{background:#000;padding:15px;position:sticky;top:0;z-index:10;}
+header h1{margin:0;color:#f9b416;font-size:20px;}
+nav{margin-top:8px;}
+nav button{margin:4px;padding:8px 14px;font-size:14px;}
+section{display:none;padding:30px 15px;max-width:700px;margin:0 auto;}
+section.active{display:block;}
+button{background:#f9b416;color:#000;border:none;padding:10px 20px;margin:8px;border-radius:6px;font-weight:bold;cursor:pointer;}
+button.small{padding:6px 10px;font-size:12px;margin:4px;}
+input{display:block;width:90%;max-width:300px;margin:8px auto;padding:10px;border:none;border-radius:6px;}
+.plan-box{background:#1f1f1f;padding:20px;margin:10px auto;border-radius:8px;max-width:300px;}
+#previewArea img,#previewArea video{width:80px;height:80px;object-fit:cover;margin:5px;border-radius:4px;border:1px solid #f9b416;}
+#adsBox{margin:15px auto;padding:10px;background:#333;border-radius:6px;max-width:320px;}
+.share-box{margin-top:16px;padding:10px;background:#1f1f1f;border-radius:6px;max-width:320px;margin-left:auto;margin-right:auto;}
+.share-box input{margin:0;width:100%;font-size:12px;padding:6px;background:#333;color:#fff;}
+/* modal */
+.modal{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:100;}
+.modal-inner{background:#1f1f1f;padding:20px;border-radius:8px;max-width:300px;width:90%;}
+.modal-inner img{width:200px;max-width:100%;margin:10px auto;display:block;background:#fff;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Editor Portfolio</h1>
+  <nav>
+    <button onclick="show('home')">Home</button>
+    <button onclick="show('plans')">Plans</button>
+    <button onclick="show('auth')">Login</button>
+    <button onclick="show('admin')">Admin</button>
+    <button onclick="gotoDash()">Dashboard</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <h2>Apna Editing Portfolio Banao</h2>
+  <p>Free ya Premium plan choose karo.</p>
+  <button onclick="show('plans')">Plans Dekho</button>
+</section>
+
+<!-- PLANS -->
+<section id="plans">
+  <h2>Plans</h2>
+  <div class="plan-box">
+    <h3>Free</h3>
+    <p>5 Thumbs • 3 Logos • 2 Videos</p>
+    <button onclick="show('auth')">Start Free</button>
+  </div>
+  <div class="plan-box">
+    <h3>Premium (₹399 / 6 mo)</h3>
+    <p>15 Thumbs • 7 Logos • 5 Videos</p>
+    <button onclick="openUPI()">Upgrade</button>
+  </div>
+  <button onclick="show('home')">Back</button>
+</section>
+
+<!-- AUTH -->
+<section id="auth">
+  <h2>Login / Signup</h2>
+  <input type="email" id="authEmail" placeholder="Email">
+  <input type="password" id="authPass" placeholder="Password">
+  <button onclick="authEmailPass()">Continue</button>
+  <button onclick="googleLoginFake()">Google se Login</button>
+  <button onclick="show('home')">Back</button>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <h2 id="dashWelcome">Dashboard</h2>
+  <div id="userInfo"></div>
+  <div id="adsBox">Free Plan (Ads ON). Premium lo!</div>
+  <p id="limitText"></p>
+  <input type="file" id="thumbInput" accept="image/*" multiple>
+  <input type="file" id="logoInput" accept="image/*" multiple>
+  <input type="file" id="videoInput" accept="video/*" multiple>
+  <div id="previewArea"></div>
+  <button onclick="saveUploads()">Save</button>
+  <button id="upgradeBtn" onclick="openUPI()">Upgrade to Premium</button>
+  <button onclick="selfUpgrade()">I Have Premium Code</button>
+  <button onclick="shareLink()">Share Link</button>
+  <button onclick="downloadData()">Download JSON</button>
+  <button onclick="logout()">Logout</button>
+  <div id="shareBox" class="share-box" style="display:none;">
+    <input type="text" id="shareInput" readonly>
+    <button class="small" onclick="copyShare()">Copy</button>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section id="admin">
+  <h2>Admin Login</h2>
+  <div id="adminLoginBox">
+    <input type="email" id="adminE" placeholder="Admin Email">
+    <input type="password" id="adminP" placeholder="Admin Password">
+    <button onclick="adminLogin()">Admin Login</button>
+  </div>
+  <div id="adminPanel" style="display:none;">
+    <h3>Users</h3>
+    <div id="adminStats"></div>
+    <div id="userList"></div>
+    <button onclick="adminLogout()">Logout Admin</button>
+  </div>
+  <button onclick="show('home')">Back</button>
+</section>
+
+<footer style="margin-top:auto;padding:30px;font-size:12px;color:#aaa;">
+  Contact: vaseemali0909@gmail.com
+</footer>
+
+<!-- UPI MODAL -->
+<div id="upiModal" class="modal">
+  <div class="modal-inner">
+    <h3>Pay ₹399</h3>
+    <p>UPI: vaseemali98@axl</p>
+    <!-- fallback QR via Google Chart API; swap with qr.png if you have -->
+    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=upi://pay?pa=vaseemali98@axl&pn=EditorPortfolio&am=399" alt="QR">
+    <p>Pay karke screenshot bhejo: <br><strong>vaseemali0909@gmail.com</strong></p>
+    <button onclick="closeUPI()">Done</button>
+  </div>
+</div>
+
+<script>
+/* ====== BASIC HELP ====== */
+function gid(id){return document.getElementById(id);}
+function show(id){
+  var secs=['home','plans','auth','dashboard','admin'];
+  for(var i=0;i<secs.length;i++){gid(secs[i]).classList.remove('active');}
+  gid(id).classList.add('active');
+}
+
+/* ====== LOCAL STORAGE USER MGMT ====== */
+function getUsers(){try{return JSON.parse(localStorage.getItem('ep_users')||'[]');}catch(e){return[];}}
+function saveUsers(u){localStorage.setItem('ep_users',JSON.stringify(u));}
+function setLogged(email){localStorage.setItem('ep_logged',email);}
+function getLoggedEmail(){return localStorage.getItem('ep_logged');}
+function getLoggedUser(){
+  var e=getLoggedEmail();if(!e)return null;
+  var us=getUsers();
+  for(var i=0;i<us.length;i++){if(us[i].email===e)return us[i];}
+  return null;
+}
+function updateUser(u){
+  var us=getUsers();
+  for(var i=0;i<us.length;i++){if(us[i].email===u.email){us[i]=u;break;}}
+  saveUsers(us);
+}
+
+/* ====== AUTH ====== */
+var ADMIN_EMAIL='vaseemali0909@gmail.com';
+var ADMIN_PASS='ali750571';      // updated
+var PREMIUM_CODE='750571ali';    // updated
+
+function authEmailPass(){
+  var e=gid('authEmail').value.trim().toLowerCase();
+  var p=gid('authPass').value.trim();
+  if(!e||!p){alert('Fields missing');return;}
+  var us=getUsers(),u=null;
+  for(var i=0;i<us.length;i++){if(us[i].email===e){u=us[i];break;}}
+  if(u){
+    if(u.password && u.password!==p){alert('Wrong password');return;}
+    if(!u.password)u.password=p;
+  }else{
+    u={name:e.split('@')[0],email:e,password:p,plan:'free',uploads:{thumbs:[],logos:[],videos:[]},created:Date.now(),lastLogin:Date.now(),loginHistory:[]};
+    us.push(u);saveUsers(us);
+  }
+  logLogin(u);
+  setLogged(e);
+  gotoDash();
+}
+
+function googleLoginFake(){
+  var e=prompt('Google Email:');if(!e)return;
+  e=e.trim().toLowerCase();
+  var us=getUsers(),u=null;
+  for(var i=0;i<us.length;i++){if(us[i].email===e){u=us[i];break;}}
+  if(!u){
+    u={name:e.split('@')[0],email:e,password:null,plan:'free',uploads:{thumbs:[],logos:[],videos:[]},created:Date.now(),lastLogin:Date.now(),loginHistory:[]};
+    us.push(u);saveUsers(us);
+  }
+  logLogin(u);
+  setLogged(e);
+  gotoDash();
+}
+
+/* Track login meta */
+function logLogin(u){
+  var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+  if(!u.loginHistory)u.loginHistory=[];
+  u.loginHistory.unshift({ts:Date.now(),tz:tz});
+  u.lastLogin=Date.now();
+  updateUser(u);
+}
+
+/* ====== DASHBOARD ====== */
+function gotoDash(){
+  var u=getLoggedUser();
+  if(!u){show('auth');return;}
+  show('dashboard');
+  gid('dashWelcome').innerHTML='Hello, '+u.name;
+  gid('userInfo').innerHTML='Email: '+u.email+'<br>Plan: '+u.plan;
+  var lim=(u.plan==='premium')?{t:15,l:7,v:5}:{t:5,l:3,v:2};
+  gid('limitText').innerHTML='Limits → Thumbs:'+lim.t+' Logos:'+lim.l+' Videos:'+lim.v;
+  gid('adsBox').style.display=(u.plan==='premium')?'none':'block';
+  gid('upgradeBtn').style.display=(u.plan==='premium')?'none':'inline-block';
+  gid('thumbInput').onchange=function(e){handleUpload(e.target.files,u,'thumbs',lim.t,false);};
+  gid('logoInput').onchange=function(e){handleUpload(e.target.files,u,'logos',lim.l,false);};
+  gid('videoInput').onchange=function(e){handleUpload(e.target.files,u,'videos',lim.v,true);};
+  renderUploads(u);
+}
+
+function handleUpload(files,u,key,limit,isVideo){
+  var cur=u.uploads[key].length;
+  if(cur+files.length>limit){alert('Limit '+limit+' (already '+cur+')');return;}
+  var count=files.length,done=0;
+  for(var i=0;i<files.length;i++){
+    (function(f){
+      var r=new FileReader();
+      r.onload=function(){
+        u.uploads[key].push(r.result);
+        done++;
+        if(done===count){updateUser(u);renderUploads(u);}
+      };
+      r.readAsDataURL(f);
+    })(files[i]);
+  }
+}
+
+function renderUploads(u){
+  var box=gid('previewArea');box.innerHTML='';
+  for(var i=0;i<u.uploads.thumbs.length;i++){box.innerHTML+='<img src="'+u.uploads.thumbs[i]+'">';}
+  for(var j=0;j<u.uploads.logos.length;j++){box.innerHTML+='<img src="'+u.uploads.logos[j]+'">';}
+  for(var k=0;k<u.uploads.videos.length;k++){box.innerHTML+='<video src="'+u.uploads.videos[k]+'" controls></video>';}
+}
+function saveUploads(){alert('Saved locally');}
+
+/* SHARE LINK */
+function shareLink(){
+  var u=getLoggedUser();if(!u){alert('Login first');return;}
+  var payload=btoa(encodeURIComponent(JSON.stringify({email:u.email,plan:u.plan,uploads:u.uploads})));
+  var link=location.origin+location.pathname+'?share='+payload;
+  gid('shareInput').value=link;
+  gid('shareBox').style.display='block';
+}
+function copyShare(){
+  var el=gid('shareInput');el.select();el.setSelectionRange(0,99999);
+  try{navigator.clipboard.writeText(el.value);alert('Copied');}catch(e){alert('Copy failed, long-press copy.');}
+}
+
+/* DOWNLOAD JSON */
+function downloadData(){
+  var u=getLoggedUser();if(!u){alert('Login first');return;}
+  var str="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(u,null,2));
+  var a=document.createElement('a');a.href=str;a.download=u.name+'_portfolio.json';a.click();
+}
+
+/* SELF PREMIUM */
+function selfUpgrade(){
+  var c=prompt('Premium Code:');if(!c)return;
+  if(c.trim().toLowerCase()!==PREMIUM_CODE.toLowerCase()){alert('Galat code');return;}
+  var u=getLoggedUser();if(!u)return;
+  u.plan='premium';updateUser(u);
+  alert('Premium Active!');
+  gotoDash();
+}
+
+/* LOGOUT */
+function logout(){localStorage.removeItem('ep_logged');show('home');}
+
+/* ====== ADMIN ====== */
+function adminLogin(){
+  var e=gid('adminE').value.trim().toLowerCase();
+  var p=gid('adminP').value.trim();
+  if(e===ADMIN_EMAIL.toLowerCase() && p===ADMIN_PASS){
+    gid('adminLoginBox').style.display='none';
+    gid('adminPanel').style.display='block';
+    loadAdminUsers();
+  }else{alert('Wrong admin credentials');}
+}
+function loadAdminUsers(){
+  var us=getUsers();
+  var total=us.length;
+  var premium=0;
+  for(var i=0;i<us.length;i++){if(us[i].plan==='premium')premium++;}
+  var free=total-premium;
+  gid('adminStats').innerHTML='Total:'+total+' | Premium:'+premium+' | Free:'+free;
+  var html='';
+  for(var j=0;j<us.length;j++){
+    var u=us[j];
+    html+='<div>'+u.email+' ('+u.plan+')<br>'+
+      '<button class="small" onclick="adminSet('+j+',\'premium\')">Make Premium</button>'+
+      '<button class="small" onclick="adminSet('+j+',\'free\')">Make Free</button>'+
+      '</div>';
+  }
+  gid('userList').innerHTML=html;
+}
+function adminSet(i,plan){
+  var us=getUsers();
+  us[i].plan=plan;
+  saveUsers(us);
+  loadAdminUsers();
+  var cu=getLoggedUser();
+  if(cu && cu.email===us[i].email)gotoDash();
+}
+function adminLogout(){
+  gid('adminPanel').style.display='none';
+  gid('adminLoginBox').style.display='block';
+}
+
+/* ====== UPI MODAL ====== */
+function openUPI(){gid('upiModal').style.display='flex';}
+function closeUPI(){gid('upiModal').style.display='none';}
+
+/* ====== SHARE MODE (READ-ONLY) ====== */
+(function(){
+  var qs=new URLSearchParams(location.search);
+  if(qs.has('share')){
+    try{
+      var obj=JSON.parse(decodeURIComponent(atob(qs.get('share'))));
+      // read-only dashboard
+      show('dashboard');
+      gid('dashWelcome').innerHTML='Portfolio: '+(obj.email||'Shared');
+      gid('userInfo').innerHTML='Plan: '+obj.plan;
+      gid('adsBox').style.display='none';
+      gid('upgradeBtn').style.display='none';
+      gid('thumbInput').disabled=true;
+      gid('logoInput').disabled=true;
+      gid('videoInput').disabled=true;
+      gid('limitText').innerHTML='Read-only shared portfolio.';
+      var box=gid('previewArea');box.innerHTML='';
+      if(obj.uploads){
+        if(obj.uploads.thumbs){for(var i=0;i<obj.uploads.thumbs.length;i++){box.innerHTML+='<img src="'+obj.uploads.thumbs[i]+'">';}}
+        if(obj.uploads.logos){for(var j=0;j<obj.uploads.logos.length;j++){box.innerHTML+='<img src="'+obj.uploads.logos[j]+'">';}}
+        if(obj.uploads.videos){for(var k=0;k<obj.uploads.videos.length;k++){box.innerHTML+='<video src="'+obj.uploads.videos[k]+'" controls></video>';}}
+      }
+      return;
+    }catch(e){}
+  }
+  // normal load
+  show('home');
+  var u=getLoggedUser();if(u)gotoDash();
+})();
+</script>
+</body>
+  </html>
