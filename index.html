@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Editor Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ====== STYLES ====== -->
+<style>
+:root{
+  --primary:#f9b416;
+  --primary-hover:#ffcc33;
+  --bg:#0d0d0d;
+  --card:rgba(255,255,255,0.05);
+  --text:#ffffff;
+  --text-dim:#bbbbbb;
+  --radius:12px;
+  --trans:0.25s;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
+a{text-decoration:none;color:var(--primary);cursor:pointer;}
+a:hover{color:var(--primary-hover);}
+.hidden{display:none!important;}
+
+header{width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:rgba(0,0,0,.85);border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;z-index:10;}
+header h1{color:var(--primary);font-size:1.4rem;font-weight:700;}
+header nav a{margin-left:12px;}
+
+.btn{display:inline-block;padding:8px 16px;font-size:.95rem;border:1px solid var(--primary);color:var(--primary);background:transparent;border-radius:8px;cursor:pointer;transition:all var(--trans);}
+.btn:hover{background:var(--primary);color:#000;}
+.btn.primary{background:var(--primary);color:#000;border:none;}
+.btn.primary:hover{background:var(--primary-hover);}
+.btn.big{padding:14px 28px;font-size:1.1rem;font-weight:600;border:none;}
+
+.section{width:100%;max-width:900px;margin:0 auto;padding:48px 24px;text-align:center;animation:fadeIn .4s ease;}
+.hero{padding-top:72px;padding-bottom:64px;}
+.hero h2{font-size:2rem;margin-bottom:12px;}
+.hero p{font-size:1.1rem;color:var(--text-dim);margin-bottom:24px;}
+
+.plans h2{font-size:1.6rem;margin-bottom:24px;color:var(--primary);}
+.plan-container{display:flex;justify-content:center;align-items:stretch;flex-wrap:wrap;gap:24px;margin-top:16px;}
+.plan-card{width:280px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:24px 16px;text-align:center;transition:transform var(--trans),box-shadow var(--trans),border var(--trans);}
+.plan-card:hover{transform:translateY(-6px) scale(1.02);border:1px solid var(--primary);box-shadow:0 0 20px rgba(249,180,22,.25);}
+.plan-card h3{color:var(--primary);margin-bottom:8px;font-size:1.25rem;}
+.plan-card p{margin-bottom:4px;font-size:.95rem;color:var(--text-dim);}
+.price{margin:12px 0;font-size:1.2rem;color:var(--primary);font-weight:600;}
+
+.form-box{width:90%;max-width:400px;margin:32px auto;background:var(--card);padding:32px 24px;border-radius:var(--radius);text-align:center;box-shadow:0 0 20px rgba(249,180,22,.15);}
+.form-box h2{color:var(--primary);margin-bottom:16px;}
+.form-box input,.form-box select{width:100%;padding:12px;margin:8px 0;border:none;border-radius:8px;background:rgba(255,255,255,.1);color:var(--text);font-size:1rem;outline:none;}
+.form-box input::placeholder{color:var(--text-dim);}
+
+.dashboard-wrap{text-align:center;padding-top:48px;}
+.dashboard-wrap h2{color:var(--primary);margin-bottom:8px;}
+.dashboard-wrap p{color:var(--text-dim);margin-bottom:16px;}
+.upload-block{margin:16px auto;max-width:500px;text-align:left;}
+.upload-block label{display:block;margin-bottom:4px;color:var(--primary);}
+.upload-block input[type=file]{width:100%;background:rgba(255,255,255,.1);padding:12px;border-radius:8px;border:none;color:var(--text);}
+
+#previewArea{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+.preview-item{width:90px;height:90px;border:1px solid var(--primary);border-radius:8px;overflow:hidden;}
+.preview-item img,.preview-item video{width:100%;height:100%;object-fit:cover;}
+
+#userList p{margin:12px 0;padding:8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.95rem;}
+#userList button{margin-left:8px;margin-top:4px;}
+
+footer{margin-top:auto;text-align:center;padding:24px;background:#000;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem;color:var(--text-dim);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:600px){
+  .hero h2{font-size:1.7rem;}
+  .plan-card{width:100%;max-width:300px;}
+  header{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Editor Portfolio</h1>
+  <nav>
+    <a onclick="navHome()">Home</a>
+    <a onclick=\"show('loginSec')\">Login</a>
+    <a onclick=\"show('signupSec')\">Sign Up</a>
+    <a onclick=\"gotoDashboard()\">Dashboard</a>
+    <a onclick=\"show('adminSec')\">Admin</a>
+  </nav>
+</header>
+
+<!-- ===== HOME (hero + plans) ===== -->
+<section id="homeSec" class="section hero">
+  <h2>Showcase Your Work Like a Pro</h2>
+  <p>Create and share your portfolio easily.</p>
+  <button class="btn big primary" onclick="show('signupSec')">Get Started</button>
+</section>
+
+<section id="plansSec" class="section plans">
+  <h2>Choose Your Plan</h2>
+  <div class="plan-container">
+    <div class="plan-card">
+      <h3>Free Plan</h3>
+      <p>✔ 5 Thumbnails</p><p>✔ 3 Logos</p><p>✔ 2 Videos</p>
+      <p class="price">Free (Ads)</p>
+      <button class="btn" onclick="selectPlanAndSignup('free')">Start Free</button>
+    </div>
+    <div class="plan-card">
+      <h3>Premium Plan</h3>
+      <p>✔ 15 Thumbnails</p><p>✔ 7 Logos</p><p>✔ 5 Videos</p>
+      <p class="price">₹399 / 6 months</p>
+      <button class="btn primary" onclick="selectPlanAndSignup('premium')">Go Premium</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOGIN ===== -->
+<section id="loginSec" class="section hidden">
+  <div class="form-box">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button class="btn primary" onclick="loginUser()">Login</button>
+    <p style="margin-top:10px;">No account? <a onclick="show('signupSec')">Sign Up</a></p>
+  </div>
+</section>
+
+<!-- ===== SIGNUP ===== -->
+<section id="signupSec" class="section hidden">
+  <div class="form-box">
+    <h2>Create Account</h2>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <select id="signupPlan">
+      <option value="free">Free Plan</option>
+      <option value="premium">Premium Plan</option>
+    </select>
+    <button class="btn primary" onclick="signupUser()">Sign Up</button>
+    <p style="margin-top:10px;">Have an account? <a onclick="show('loginSec')">Login</a></p>
+  </div>
+</section>
+
+<!-- ===== DASHBOARD ===== -->
+<section id="dashboardSec" class="section hidden">
+  <div class="dashboard-wrap">
+    <h2 id="dashWelcome"></h2>
+    <p id="dashPlan"></p>
+    <div id="adsBox" class="form-box hidden">
+      <h2>Ads</h2>
+      <p>Upgrade to Premium to remove ads.</p>
+    </div>
+
+    <h3 style="margin-top:32px;">Upload Your Work</h3>
+    <p id="limitText"></p>
+
+    <div class="upload-block">
+      <label>Thumbnails:</label>
+      <input type="file" id="thumbInput" accept="image/*" multiple>
+    </div>
+    <div class="upload-block">
+      <label>Logos:</label>
+      <input type="file" id="logoInput" accept="image/*" multiple>
+    </div>
+    <div class="upload-block">
+      <label>Short Videos:</label>
+      <input type="file" id="videoInput" accept="video/*" multiple>
+    </div>
+
+    <button class="btn primary" onclick="saveUploads()">Save Portfolio</button>
+
+    <div id="previewArea"></div>
+
+    <div style="margin-top:32px;">
+      <button id="upgradeBtn" class="btn primary hidden" onclick="startUpgrade()">Upgrade to Premium (₹399)</button>
+      <button class="btn" style="margin-left:8px;" onclick="logoutUser()">Logout</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ADMIN ===== -->
+<section id="adminSec" class="section hidden">
+  <div class="form-box" id="adminLoginBox">
+    <h2>Admin Login</h2>
+    <input type="email" id="adminEmail" placeholder="Admin Email">
+    <input type="password" id="adminPassword" placeholder="Password">
+    <button class="btn primary" onclick="adminLogin()">Login</button>
+  </div>
+
+  <div id="adminPanelBox" class="dashboard-wrap hidden">
+    <h2>Users</h2>
+    <div id="userList"></div>
+    <button class="btn" onclick="adminLogout()">Logout Admin</button>
+  </div>
+</section>
+
+<footer>
+  <p>Need help? Contact: vaseemali0909@gmail.com</p>
+</footer>
+
+<!-- Razorpay -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+/* === UTIL SHORTCUT === */
+const $ = id => document.getElementById(id);
+
+/* === SECTION CONTROL === */
+function hideAll(){
+  ['homeSec','plansSec','loginSec','signupSec','dashboardSec','adminSec']
+    .forEach(i=>$(i).classList.add('hidden'));
+}
+function show(id){
+  hideAll();
+  $(id).classList.remove('hidden');
+}
+function navHome(){
+  hideAll();
+  $('homeSec').classList.remove('hidden');
+  $('plansSec').classList.remove('hidden');
+}
+
+/* === PLAN SELECT FROM HOME === */
+function selectPlanAndSignup(plan){
+  show('signupSec');
+  $('signupPlan').value = plan;
+}
+
+/* === STORAGE HELPERS === */
+function getUsers(){ return JSON.parse(localStorage.getItem('ep_users')||'[]'); }
+function saveUsers(u){ localStorage.setItem('ep_users',JSON.stringify(u)); }
+function setLogged(email){ localStorage.setItem('ep_logged',email); }
+function getLoggedEmail(){ return localStorage.getItem('ep_logged'); }
+function getLoggedUser(){ const e=getLoggedEmail(); if(!e) return null; return getUsers().find(u=>u.email===e)||null; }
+function updateUser(user){
+  const us=getUsers();
+  const i=us.findIndex(u=>u.email===user.email);
+  if(i>-1){us[i]=user; saveUsers(us);}
+}
+
+/* === SIGNUP === */
+function signupUser(){
+  const name=$('signupName').value.trim();
+  const email=$('signupEmail').value.trim();
+  const pass=$('signupPassword').value;
+  const plan=$('signupPlan').value;
+  if(!name||!email||!pass){alert('Fill all fields');return;}
+  const users=getUsers();
+  if(users.some(u=>u.email===email)){alert('User already exists');return;}
+  users.push({name,email,password:pass,plan,uploads:{thumbs:[],logos:[],videos:[]}});
+  saveUsers(users);
+  alert('Signup done! Please login.');
+  show('loginSec');
+}
+
+/* === LOGIN === */
+function loginUser(){
+  const email=$('loginEmail').value.trim();
+  const pass=$('loginPassword').value;
+  const u=getUsers().find(x=>x.email===email && x.password===pass);
+  if(!u){alert('Invalid credentials');return;}
+  setLogged(u.email);
+  gotoDashboard();
+}
+
+/* === DASHBOARD === */
+function gotoDashboard(){
+  const u=getLoggedUser();
+  if(!u){show('loginSec');return;}
+  show('dashboardSec');
+  $('dashWelcome').innerText='Hello, '+u.name;
+  $('dashPlan').innerText='Plan: '+(u.plan==='premium'?'Premium':'Free');
+  $('adsBox').classList.toggle('hidden',u.plan!=='free');
+  $('upgradeBtn').classList.toggle('hidden',u.plan!=='free');
+  const limits=u.plan==='premium'?{thumbs:15,logos:7,videos:5}:{thumbs:5,logos:3,videos:2};
+  $('limitText').innerText=`Limits → Thumbs:${limits.thumbs} | Logos:${limits.logos} | Videos:${limits.videos}`;
+
+  // file handlers
+  $('thumbInput').onchange=e=>handleUpload(e.target.files,u,'thumbs',limits.thumbs);
+  $('logoInput').onchange=e=>handleUpload(e.target.files,u,'logos',limits.logos);
+  $('videoInput').onchange=e=>handleUpload(e.target.files,u,'videos',limits.videos,true);
+
+  renderUploads(u);
+}
+
+function handleUpload(files,u,key,limit,isVideo){
+  const cur=u.uploads[key].length;
+  const arr=[...files];
+  if(cur+arr.length>limit){alert(`Limit ${limit}. You have ${cur}.`);return;}
+  Promise.all(arr.map(f=>new Promise(res=>{
+    const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f);
+  }))).then(data=>{
+    u.uploads[key].push(...data);
+    updateUser(u);
+    renderUploads(u);
+  });
+}
+
+function renderUploads(u){
+  const box=$('previewArea');
+  box.innerHTML='';
+  u.uploads.thumbs.forEach(src=>box.innerHTML+=`<div class="preview-item"><img src="${src}"></div>`);
+  u.uploads.logos.forEach(src=>box.innerHTML+=`<div class="preview-item"><img src="${src}"></div>`);
+  u.uploads.videos.forEach(src=>box.innerHTML+=`<div class="preview-item"><video src="${src}" controls></video></div>`);
+}
+
+function saveUploads(){ alert('Portfolio Saved!'); }
+
+/* === UPGRADE (Razorpay dummy) === */
+function startUpgrade(){
+  const u=getLoggedUser(); if(!u){show('loginSec');return;}
+  const options={
+    key:'rzp_test_dummykey',
+    amount:39900,
+    currency:'INR',
+    name:'Editor Portfolio',
+    description:'Premium Plan (6 months)',
+    handler:()=>{
+      u.plan='premium';
+      updateUser(u);
+      alert('Premium Activated!');
+      gotoDashboard();
+    },
+    prefill:{email:u.email},
+    theme:{color:'#f9b416'}
+  };
+  if(window.Razorpay){
+    new Razorpay(options).open();
+  }else{
+    // fallback
+    alert('Payment simulated (Razorpay not loaded). Upgrading...');
+    options.handler();
+  }
+}
+
+/* === LOGOUT === */
+function logoutUser(){
+  localStorage.removeItem('ep_logged');
+  navHome();
+}
+
+/* === ADMIN === */
+function adminLogin(){
+  const email=$('adminEmail').value.trim();
+  const pass=$('adminPassword').value.trim();
+  if(email==='vaseemali0909@gmail.com' && pass==='Admin@123'){
+    $('adminLoginBox').classList.add('hidden');
+    $('adminPanelBox').classList.remove('hidden');
+    renderAdminUsers();
+  }else{
+    alert('Wrong admin credentials');
+  }
+}
+
+function renderAdminUsers(){
+  const holder=$('userList');
+  const us=getUsers();
+  holder.innerHTML='';
+  if(us.length===0){holder.innerHTML='<p>No users yet.</p>';return;}
+  us.forEach((u,i)=>{
+    holder.innerHTML+=`
+      <p>${u.name} (${u.email}) - <strong>${u.plan}</strong>
+        <button class="btn primary" onclick="adminSetPlan(${i},'premium')">Premium</button>
+        <button class="btn" onclick="adminSetPlan(${i},'free')">Free</button>
+      </p>`;
+  });
+}
+
+function adminSetPlan(i,plan){
+  const us=getUsers();
+  us[i].plan=plan;
+  saveUsers(us);
+  renderAdminUsers();
+  const lu=getLoggedUser();
+  if(lu && lu.email===us[i].email){gotoDashboard();}
+}
+
+function adminLogout(){
+  $('adminPanelBox').classList.add('hidden');
+  $('adminLoginBox').classList.remove('hidden');
+}
+
+/* === INIT ON LOAD === */
+document.addEventListener('DOMContentLoaded',()=>{
+  navHome(); // show home + plans
+  // अगर ऑटो login चाहे तो uncomment:
+  // if(getLoggedUser()) gotoDashboard();
+});
+</script>
+</body>
+  </html>
