@@ -1,0 +1,219 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #121212;
+  color: #fff;
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  font-size: 28px;
+  color: #f9b416;
+}
+
+header nav a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #f9b416;
+}
+
+/* Hero Section */
+#home {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #1e1e1e, #292929);
+  animation: fadeIn 1s ease-in;
+}
+
+#home h2 {
+  font-size: 40px;
+  color: #f9b416;
+  margin-bottom: 10px;
+}
+
+#home p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+#home button {
+  padding: 12px 25px;
+  background: #f9b416;
+  color: #121212;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+
+#home button:hover {
+  background: #ffcc33;
+  transform: scale(1.05);
+}
+
+/* Plans Section */
+#plans {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 70px 20px;
+  background: #1a1a1a;
+}
+
+.plan {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.plan:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+}
+
+.plan h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #f9b416;
+}
+
+.plan p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.plan button {
+  padding: 12px 20px;
+  background: #f9b416;
+  color: #121212;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.plan button:hover {
+  background: #ffcc33;
+}
+
+/* Login Section */
+#login {
+  text-align: center;
+  padding: 70px 20px;
+}
+
+#login form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+#login input {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+#login button {
+  padding: 10px;
+  background: #f9b416;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#login button:hover {
+  background: #ffcc33;
+}
+
+/* Admin Panel */
+#admin {
+  text-align: center;
+  padding: 70px 20px;
+}
+
+#admin form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+#adminDashboard {
+  margin-top: 20px;
+}
+
+#adminDashboard div {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #plans {
+    flex-direction: column;
+  }
+    }
