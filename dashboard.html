@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Dashboard | Editor Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Your Dashboard</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a style="cursor:pointer;" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section class="section dashboard-wrap">
+  <h2 id="dashWelcome"></h2>
+  <div id="userInfo" class="dashboard-card"></div>
+  <div id="adsBox" class="dashboard-card hidden">
+    <strong>Ads Enabled</strong>
+    <p>Premium lo, ads hatenge.</p>
+  </div>
+
+  <h3>Upload Portfolio</h3>
+  <p id="limitText"></p>
+
+  <div class="upload-block">
+    <label>Thumbnails:</label>
+    <input type="file" id="thumbInput" accept="image/*" multiple>
+  </div>
+  <div class="upload-block">
+    <label>Logos:</label>
+    <input type="file" id="logoInput" accept="image/*" multiple>
+  </div>
+  <div class="upload-block">
+    <label>Short Videos:</label>
+    <input type="file" id="videoInput" accept="video/*" multiple>
+  </div>
+
+  <button class="btn primary block" onclick="saveUploads()">Save Portfolio</button>
+  <div id="previewArea"></div>
+
+  <div style="margin-top:24px;">
+    <button id="upgradeBtn" class="btn primary block hidden" onclick="openUPI()">Upgrade to Premium</button>
+    <button class="btn block" onclick="selfUpgrade()">I Have Premium Code</button>
+    <button class="btn block" onclick="copyShareLink()">Share Portfolio Link</button>
+    <button class="btn block" onclick="downloadPortfolio()">Download Portfolio JSON</button>
+    <button class="btn danger block" onclick="logout()">Logout</button>
+  </div>
+
+  <div id="shareBox" class="share-box hidden">
+    <p>Copy & send this link:</p>
+    <input type="text" id="shareLinkInput" readonly>
+    <button class="btn primary block" onclick="copyShareInput()">Copy</button>
+  </div>
+</section>
+
+<!-- UPI MODAL -->
+<div id="upiModal" class="modal">
+  <div class="modal-content">
+    <h3>Pay ₹399 (6 Months Premium)</h3>
+    <p>Scan & Pay:</p>
+    <img src="assets/qr.png" alt="UPI QR">
+    <p><strong>UPI: vaseemali98@axl</strong></p>
+    <p class="small-note">Payment screenshot bhejo:<br><strong>vaseemali0909@gmail.com</strong><br>Premium unlock code milega.</p>
+    <button class="btn primary block" onclick="closeUPI()">Done / Close</button>
+  </div>
+</div>
+
+<footer>Contact: vaseemali0909@gmail.com</footer>
+
+<!-- Firebase libs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<!-- App globals -->
+<script src="app.js"></script>
+<!-- Page logic -->
+<script src="dashboard.js"></script>
+</body>
+    </html>
