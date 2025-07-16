@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Login | Editor Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Editor Portfolio</h1>
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<section class="section">
+  <div class="form-box">
+    <h2>Login / Signup</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="pass" placeholder="Password">
+    <button class="btn primary block" id="emailSubmit">Continue</button>
+    <p class="small-note">Naya account? Automatically ban jayega.</p>
+    <hr style="margin:16px 0;border:none;height:1px;background:rgba(255,255,255,.1);">
+    <button class="btn block" id="googleBtn">Google se Login</button>
+  </div>
+</section>
+
+<footer>Contact: vaseemali0909@gmail.com</footer>
+
+<!-- Firebase libs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<!-- App globals -->
+<script src="app.js"></script>
+<!-- Page logic -->
+<script src="auth.js"></script>
+</body>
+</html>
