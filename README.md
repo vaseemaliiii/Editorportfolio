@@ -1,2 +1,0 @@
-# Editorportfolio
-Social media 
